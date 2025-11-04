@@ -1,712 +1,157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AI Tool Pack — AI Creator Pro</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Creator Pro Tool Dashboard (50+ Tools)</title>
 <style>
-  :root{
-    --bg:#061226;
-    --panel:#08162b;
-    --card:rgba(255,255,255,0.03);
-    --royal1:#0a57e6;
-    --royal2:#003bb3;
-    --muted:#9bbbe0;
-    --text:#eaf6ff;
-    --glass: rgba(255,255,255,0.02);
-    --shadow: rgba(10,77,217,0.18);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:Poppins,Inter,Segoe UI,Roboto,Arial,sans-serif;
-    background:linear-gradient(180deg,var(--bg),#071836);
-    color:var(--text);
-    padding:18px;
-  }
-
-  header{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:14px;
-  }
-  .branding{display:flex;flex-direction:column}
-  h1{margin:0;color:var(--royal1);font-size:1.25rem}
-  p.lead{margin:4px 0 0;color:var(--muted);font-size:0.95rem}
-
-  .controls{display:flex;gap:10px;align-items:center}
-  .controls select, .controls input {
-    padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);
-    background:var(--glass);color:var(--text);
-    min-width:160px;
-  }
-  .controls button{
-    padding:10px 12px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--royal1),var(--royal2));
-    color:#04102b;font-weight:700;cursor:pointer;box-shadow:0 8px 24px var(--shadow)
-  }
-
-  .layout{display:grid;grid-template-columns:1fr;gap:12px}
-  @media(min-width:920px){
-    .layout{grid-template-columns:380px 1fr;align-items:start}
-  }
-
-  /* left panel */
-  .panel{
-    background:var(--card);border-radius:12px;padding:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6);max-height:78vh;overflow:auto;
-  }
-  .category{margin-bottom:12px}
-  .category h3{margin:6px 0;color:var(--royal1);font-size:14px}
-
-  .tool-item{
-    display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;border-radius:10px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
-    margin:8px 0;border:1px solid rgba(255,255,255,0.02);
-  }
-  .tool-info{flex:1;padding-right:10px;text-align:left}
-  .tool-info .name{font-weight:700}
-  .tool-info .desc{font-size:12px;color:var(--muted);margin-top:4px}
-
-  .tool-actions{display:flex;gap:8px;align-items:center}
-  .use-btn{
-    padding:8px 10px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--royal1),var(--royal2));
-    color:#04102b;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block;
-    box-shadow:0 10px 30px var(--shadow)
-  }
-  .open-new{
-    padding:6px 8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted);font-size:13px;cursor:pointer;text-decoration:none
-  }
-
-  /* right viewer / note panel */
-  .viewer{
-    background:var(--card);border-radius:12px;padding:14px;box-shadow:0 8px 30px rgba(2,6,23,0.6);min-height:78vh;
-  }
-  .viewer h2{margin:0;color:var(--royal1)}
-  .viewer p{color:var(--muted);margin-top:8px}
-  .grid-short{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:12px}
-
-  footer{text-align:center;color:var(--muted);margin-top:14px;font-size:13px}
-  footer small{display:block;margin-top:6px;color:#9fb8d6}
-
-  @media(max-width:520px){
-    .controls{flex-direction:column;align-items:stretch}
-    .controls input, .controls select{width:100%}
-  }
+:root{
+  --bg:#071022;
+  --panel:#0b1428;
+  --royal1:#0d6efd;
+  --royal2:#0056d6;
+  --white:#eaf6ff;
+  --muted:#9db8d1;
+}
+body{
+  background:linear-gradient(180deg,var(--bg),#0a1a32);
+  color:var(--white);
+  font-family:'Poppins',Segoe UI,Roboto,Arial;
+  margin:0;
+  padding:0;
+}
+header{
+  text-align:center;
+  padding:25px 12px;
+  background:linear-gradient(90deg,var(--royal1),var(--royal2));
+  color:#fff;
+  font-weight:800;
+  font-size:1.6em;
+  letter-spacing:.5px;
+}
+.search-bar{
+  text-align:center;
+  padding:16px;
+  background:var(--panel);
+}
+.search-bar input{
+  width:90%;
+  max-width:420px;
+  padding:10px 14px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+  font-size:16px;
+  background:#0e203e;
+  color:var(--white);
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:12px;
+  padding:20px;
+}
+.tool{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  background:linear-gradient(90deg,var(--royal1),var(--royal2));
+  color:#071022;
+  font-weight:700;
+  border-radius:12px;
+  text-decoration:none;
+  transition:.2s;
+}
+.tool:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(13,110,253,0.4);
+}
+footer{
+  text-align:center;
+  padding:18px;
+  font-size:13px;
+  color:var(--muted);
+}
 </style>
+<script>
+function searchTools(){
+  let input=document.getElementById("searchInput").value.toLowerCase();
+  let tools=document.getElementsByClassName("tool");
+  for(let i=0;i<tools.length;i++){
+    let txt=tools[i].innerText.toLowerCase();
+    tools[i].style.display=txt.includes(input)?'flex':'none';
+  }
+}
+</script>
 </head>
 <body>
 
-<header>
-  <div class="branding">
-    <h1>AI Tool Pack — AI Creator Pro</h1>
-    <p class="lead">Access the top 50 AI tools buyers use most — writing, design, video, automation, and growth.</p>
-  </div>
+<header>AI Creator Pro Tool Dashboard (50+ Tools)</header>
 
-  <div class="controls" aria-label="Tool controls">
-    <input id="search" placeholder="Search tools (eg. canva, chatgpt, midjourney)" aria-label="Search tools" />
-    <select id="categoryFilter" aria-label="Filter by category">
-      <option value="all">All categories</option>
-      <option value="writing">Content & Writing</option>
-      <option value="design">Design & Branding</option>
-      <option value="video">Video & Animation</option>
-      <option value="growth">Marketing & Growth</option>
-      <option value="automation">Automation & Productivity</option>
-    </select>
-    <button id="clearBtn" title="Clear search">Clear</button>
-  </div>
-</header>
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="🔍 Search tools..." onkeyup="searchTools()">
+</div>
 
-<div class="layout">
-  <!-- LEFT: tool list -->
-  <div class="panel" id="toolList">
-
-    <!-- CATEGORY: Content & Writing (10) -->
-    <div class="category" data-cat="writing">
-      <h3>✍️ Content & Writing</h3>
-
-      <div class="tool-item" data-name="ChatGPT" data-cat="writing">
-        <div class="tool-info">
-          <div class="name">ChatGPT (ChatGPT Pro)</div>
-          <div class="desc">Versatile assistant — writing, planning, ideation, and prompts.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/chatgpt" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/chatgpt" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Claude" data-cat="writing">
-        <div class="tool-info">
-          <div class="name">Claude AI</div>
-          <div class="desc">Long-form writing and instruction-following LLM alternative.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/claude" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/claude" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Jasper" data-cat="writing">
-        <div class="tool-info">
-          <div class="name">Jasper AI</div>
-          <div class="desc">Marketing copy, ads, and content funnels made fast.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/jasper" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/jasper" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Copy.ai" data-cat="writing">
-        <div class="tool-info">
-          <div class="name">Copy.ai</div>
-          <div class="desc">Short-form copy, captions, and taglines quickly generated.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/copyai" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/copyai" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Writesonic" data-cat="writing">
-        <div class="tool-info">
-          <div class="name">Writesonic</div>
-          <div class="desc">Blog posts, product pages, and ad copy with SEO features.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/writesonic" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/writesonic" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Rytr" data-cat="writing">
-        <div class="tool-info">
-          <div class="name">Rytr</div>
-          <div class="desc">Fast content generation for microtasks and social posts.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/rytr" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/rytr" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Sudowrite" data-cat="writing">
-        <div class="tool-info">
-          <div class="name">Sudowrite</div>
-          <div class="desc">Creative fiction & story-building assistant for authors.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/sudowrite" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/sudowrite" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Notion AI" data-cat="writing">
-        <div class="tool-info">
-          <div class="name">Notion AI</div>
-          <div class="desc">Document automation, templates and content planning inside Notion.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/notion" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/notion" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="CopyMonkey" data-cat="writing">
-        <div class="tool-info">
-          <div class="name">CopyMonkey</div>
-          <div class="desc">E-commerce product description automation for Amazon & stores.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/copymonkey" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/copymonkey" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- CATEGORY: Design & Branding (10) -->
-    <div class="category" data-cat="design">
-      <h3>🎨 Design & Branding</h3>
-
-      <div class="tool-item" data-name="Canva" data-cat="design">
-        <div class="tool-info">
-          <div class="name">Canva (Magic Studio)</div>
-          <div class="desc">Design templates, brand kits, thumbnails and social graphics.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/canva" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/canva" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Midjourney" data-cat="design">
-        <div class="tool-info">
-          <div class="name">Midjourney</div>
-          <div class="desc">Art-style image generation — concept art, thumbnails, characters.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/midjourney" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/midjourney" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Leonardo" data-cat="design">
-        <div class="tool-info">
-          <div class="name">Leonardo AI</div>
-          <div class="desc">Character, scene and product image generation for creators.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/leonardo" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/leonardo" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Ideogram" data-cat="design">
-        <div class="tool-info">
-          <div class="name">Ideogram AI</div>
-          <div class="desc">Quick image generation optimized for product & concept visuals.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/ideogram" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/ideogram" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Canva Magic" data-cat="design">
-        <div class="tool-info">
-          <div class="name">Remove.bg</div>
-          <div class="desc">Automatic background removal and quick photo fixes.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/removebg" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/removebg" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Pixlr" data-cat="design">
-        <div class="tool-info">
-          <div class="name">Pixlr (AI Editor)</div>
-          <div class="desc">Quick photo editor with AI enhancements for thumbnails.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/pixlr" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/pixlr" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Looka" data-cat="design">
-        <div class="tool-info">
-          <div class="name">Looka</div>
-          <div class="desc">Logo maker and brand kit generator for fast identities.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/looka" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/looka" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Uizard" data-cat="design">
-        <div class="tool-info">
-          <div class="name">Uizard</div>
-          <div class="desc">Turn sketches into UI mockups and prototypes quickly.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/uizard" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/uizard" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Canva Brand Kit" data-cat="design">
-        <div class="tool-info">
-          <div class="name">Brand Kit Tools</div>
-          <div class="desc">Brand kits, fonts and color management across tools.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/brandkit" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/brandkit" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- CATEGORY: Video & Animation (10) -->
-    <div class="category" data-cat="video">
-      <h3>🎬 Video & Animation</h3>
-
-      <div class="tool-item" data-name="Pika Labs" data-cat="video">
-        <div class="tool-info">
-          <div class="name">Pika Labs</div>
-          <div class="desc">Text-to-short-video generator for social content.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/pika" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/pika" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Runway" data-cat="video">
-        <div class="tool-info">
-          <div class="name">Runway ML</div>
-          <div class="desc">AI video editing, background removal and effects.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/runway" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/runway" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Kaiber" data-cat="video">
-        <div class="tool-info">
-          <div class="name">Kaiber</div>
-          <div class="desc">Image-to-motion AI and short video generation tools.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/kaiber" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/kaiber" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Synthesia" data-cat="video">
-        <div class="tool-info">
-          <div class="name">Synthesia</div>
-          <div class="desc">AI avatars and voice-driven videos — courses & intros.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/synthesia" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/synthesia" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="HeyGen" data-cat="video">
-        <div class="tool-info">
-          <div class="name">HeyGen</div>
-          <div class="desc">Quick avatar videos and short marketing clips.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/heygen" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/heygen" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Pexels AI" data-cat="video">
-        <div class="tool-info">
-          <div class="name">Pexels / Stock AI</div>
-          <div class="desc">Stock clips and AI-curated B-roll for quick edits.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/pexels" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/pexels" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Descript" data-cat="video">
-        <div class="tool-info">
-          <div class="name">Descript</div>
-          <div class="desc">Transcript-led video editor and quick repurposing tools.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/descript" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/descript" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Kaiber2" data-cat="video">
-        <div class="tool-info">
-          <div class="name">Kaiber (Advanced)</div>
-          <div class="desc">Advanced motion styles and transitions for short videos.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/kaiber2" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/kaiber2" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="PikaLabs2" data-cat="video">
-        <div class="tool-info">
-          <div class="name">Pika Labs (Pro)</div>
-          <div class="desc">Extra templates & pro-level short-video generation.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/pikalabspro" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/pikalabspro" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- CATEGORY: Marketing & Growth (10) -->
-    <div class="category" data-cat="growth">
-      <h3>📈 Marketing & Growth</h3>
-
-      <div class="tool-item" data-name="Surfer" data-cat="growth">
-        <div class="tool-info">
-          <div class="name">Surfer SEO</div>
-          <div class="desc">Content optimization and SERP analysis for blog growth.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/surfer" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/surfer" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Semrush" data-cat="growth">
-        <div class="tool-info">
-          <div class="name">Semrush</div>
-          <div class="desc">Keyword research, competitor analysis, and traffic insights.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/semrush" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/semrush" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Ahrefs" data-cat="growth">
-        <div class="tool-info">
-          <div class="name">Ahrefs</div>
-          <div class="desc">Backlink & keyword research for deep SEO audits.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/ahrefs" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/ahrefs" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Gumroad" data-cat="growth">
-        <div class="tool-info">
-          <div class="name">Gumroad</div>
-          <div class="desc">Sell digital goods and deliver downloads simply.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/gumroad" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/gumroad" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="AppSumo" data-cat="growth">
-        <div class="tool-info">
-          <div class="name">AppSumo</div>
-          <div class="desc">Deals and lifetime offers for creator software tools.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/appsumo" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/appsumo" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="PromptBase" data-cat="growth">
-        <div class="tool-info">
-          <div class="name">PromptBase</div>
-          <div class="desc">Buy and sell high-quality prompts to monetize your work.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/promptbase" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/promptbase" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Mixo" data-cat="growth">
-        <div class="tool-info">
-          <div class="name">Mixo</div>
-          <div class="desc">Instant landing pages and one-click product pages for launches.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/mixo" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/mixo" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Durable" data-cat="growth">
-        <div class="tool-info">
-          <div class="name">Durable</div>
-          <div class="desc">AI website builder for small businesses and portfolios.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/durable" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/durable" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Gumroad2" data-cat="growth">
-        <div class="tool-info">
-          <div class="name">Lemon Squeezy</div>
-          <div class="desc">Payments, licensing, and subscriptions for digital businesses.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/lemonsqueezy" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/lemonsqueezy" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- CATEGORY: Automation & Productivity (10) -->
-    <div class="category" data-cat="automation">
-      <h3>⚙️ Automation & Productivity</h3>
-
-      <div class="tool-item" data-name="Zapier" data-cat="automation">
-        <div class="tool-info">
-          <div class="name">Zapier</div>
-          <div class="desc">Automate tasks and connect apps without code.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/zapier" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/zapier" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Make" data-cat="automation">
-        <div class="tool-info">
-          <div class="name">Make (Integromat)</div>
-          <div class="desc">Advanced visual automation for complex workflows.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/make" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/make" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Replit" data-cat="automation">
-        <div class="tool-info">
-          <div class="name">Replit</div>
-          <div class="desc">Run small scripts, bots and serverless demos quickly.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/replit" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/replit" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="GitHub Copilot" data-cat="automation">
-        <div class="tool-info">
-          <div class="name">GitHub Copilot</div>
-          <div class="desc">Coding assistant to speed development and prototypes.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/githubcopilot" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/githubcopilot" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Pinecone" data-cat="automation">
-        <div class="tool-info">
-          <div class="name">Pinecone</div>
-          <div class="desc">Vector DB for sematic search, embeddings & retrieval.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/pinecone" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/pinecone" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Weaviate" data-cat="automation">
-        <div class="tool-info">
-          <div class="name">Weaviate</div>
-          <div class="desc">Open-source semantic vector search engine.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/weaviate" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/weaviate" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Milvus" data-cat="automation">
-        <div class="tool-info">
-          <div class="name">Milvus</div>
-          <div class="desc">High-performance vector DB for production search.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/milvus" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/milvus" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Flowise" data-cat="automation">
-        <div class="tool-info">
-          <div class="name">Flowise AI</div>
-          <div class="desc">Build visual LLM workflows and connect models with nodes.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/flowise" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/flowise" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-      <div class="tool-item" data-name="Langflow" data-cat="automation">
-        <div class="tool-info">
-          <div class="name">Langflow</div>
-          <div class="desc">Open-source visual builder for LLM chains and agents.</div>
-        </div>
-        <div class="tool-actions">
-          <a class="use-btn" href="https://your-affiliate-link.com/langflow" target="_blank" rel="noopener">Use Tool</a>
-          <a class="open-new" href="https://your-affiliate-link.com/langflow" target="_blank" rel="noopener">↗</a>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- RIGHT: viewer/info -->
-  <div class="viewer" aria-live="polite">
-    <h2>How to use</h2>
-    <p>Click any <strong>Use Tool</strong> button to open the tool in a new tab. Use the search box or category filter to find tools quickly.</p>
-
-    <div class="grid-short" id="quickPreview">
-      <div style="background:linear-gradient(90deg,var(--royal1),var(--royal2));padding:10px;border-radius:8px;font-weight:700;color:#04102b">Top Picks</div>
-      <div style="background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;color:var(--muted)">ChatGPT</div>
-      <div style="background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;color:var(--muted)">Canva</div>
-      <div style="background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;color:var(--muted)">Pika Labs</div>
-      <div style="background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;color:var(--muted)">Runway</div>
-    </div>
-
-    <p style="margin-top:12px;color:var(--muted);font-size:13px">Tip: Replace the placeholder affiliate links in this file with your own tracking links using your editor (Find & Replace). Buttons will keep working the same.</p>
-  </div>
+<div class="grid">
+  <a class="tool" href="https://chat.openai.com" target="_blank">ChatGPT</a>
+  <a class="tool" href="https://www.canva.com" target="_blank">Canva Magic Studio</a>
+  <a class="tool" href="https://www.leonardo.ai" target="_blank">Leonardo AI</a>
+  <a class="tool" href="https://pika.art" target="_blank">Pika Labs</a>
+  <a class="tool" href="https://runwayml.com" target="_blank">Runway ML</a>
+  <a class="tool" href="https://www.midjourney.com" target="_blank">Midjourney</a>
+  <a class="tool" href="https://www.adobe.com/firefly" target="_blank">Adobe Firefly</a>
+  <a class="tool" href="https://app.leonardo.ai" target="_blank">Leonardo Pro</a>
+  <a class="tool" href="https://www.copy.ai" target="_blank">Copy.ai</a>
+  <a class="tool" href="https://writesonic.com" target="_blank">Writesonic</a>
+  <a class="tool" href="https://www.jasper.ai" target="_blank">Jasper AI</a>
+  <a class="tool" href="https://www.synthesia.io" target="_blank">Synthesia</a>
+  <a class="tool" href="https://www.play.ht" target="_blank">Play.ht</a>
+  <a class="tool" href="https://www.elevenlabs.io" target="_blank">ElevenLabs</a>
+  <a class="tool" href="https://www.descript.com" target="_blank">Descript</a>
+  <a class="tool" href="https://www.recraft.ai" target="_blank">Recraft AI</a>
+  <a class="tool" href="https://www.d-id.com" target="_blank">D-ID</a>
+  <a class="tool" href="https://www.notion.so" target="_blank">Notion AI</a>
+  <a class="tool" href="https://www.zapier.com" target="_blank">Zapier</a>
+  <a class="tool" href="https://www.make.com" target="_blank">Make (Integromat)</a>
+  <a class="tool" href="https://durable.co" target="_blank">Durable AI</a>
+  <a class="tool" href="https://www.gumroad.com" target="_blank">Gumroad</a>
+  <a class="tool" href="https://www.shopify.com" target="_blank">Shopify</a>
+  <a class="tool" href="https://www.notion.so" target="_blank">Notion</a>
+  <a class="tool" href="https://mixo.io" target="_blank">Mixo</a>
+  <a class="tool" href="https://www.copygenius.ai" target="_blank">CopyGenius</a>
+  <a class="tool" href="https://www.peppertype.ai" target="_blank">Peppertype</a>
+  <a class="tool" href="https://www.copylime.com" target="_blank">Copylime</a>
+  <a class="tool" href="https://www.promptbase.com" target="_blank">PromptBase</a>
+  <a class="tool" href="https://www.remini.ai" target="_blank">Remini AI</a>
+  <a class="tool" href="https://www.remove.bg" target="_blank">Remove.bg</a>
+  <a class="tool" href="https://www.fotor.com" target="_blank">Fotor AI</a>
+  <a class="tool" href="https://www.pixlr.com" target="_blank">Pixlr AI</a>
+  <a class="tool" href="https://www.creativefabrica.com/spark" target="_blank">Creative Fabrica Spark</a>
+  <a class="tool" href="https://www.stockimg.ai" target="_blank">StockImg AI</a>
+  <a class="tool" href="https://www.hotpot.ai" target="_blank">Hotpot.ai</a>
+  <a class="tool" href="https://www.tome.app" target="_blank">Tome AI</a>
+  <a class="tool" href="https://www.decktopus.com" target="_blank">Decktopus</a>
+  <a class="tool" href="https://www.fliki.ai" target="_blank">Fliki</a>
+  <a class="tool" href="https://www.veed.io" target="_blank">Veed.io</a>
+  <a class="tool" href="https://www.copilot.microsoft.com" target="_blank">Microsoft Copilot</a>
+  <a class="tool" href="https://workspace.google.com/products/gemini" target="_blank">Google Gemini</a>
+  <a class="tool" href="https://www.perplexity.ai" target="_blank">Perplexity</a>
+  <a class="tool" href="https://www.pi.ai" target="_blank">Pi AI</a>
+  <a class="tool" href="https://www.tutorai.me" target="_blank">TutorAI</a>
+  <a class="tool" href="https://www.quizgecko.com" target="_blank">Quizgecko</a>
+  <a class="tool" href="https://www.scribehow.com" target="_blank">Scribe</a>
+  <a class="tool" href="https://www.magical.so" target="_blank">Magical AI</a>
+  <a class="tool" href="https://www.grammarly.com" target="_blank">Grammarly</a>
+  <a class="tool" href="https://www.notion.so/product/ai" target="_blank">Notion AI Tools</a>
+  <a class="tool" href="https://www.kajabi.com" target="_blank">Kajabi AI</a>
 </div>
 
 <footer>
-  © 2025 AI Creator Pro Master Pack — Pravin Chaudhary
+  AI Creator Pro Master Pack © 2025 — Created by Pravin Chaudhary<br>
   <small>Empowering creators through AI innovation</small>
 </footer>
 
-<script>
-  // Search + Filter
-  const searchInput = document.getElementById('search');
-  const categoryFilter = document.getElementById('categoryFilter');
-  const clearBtn = document.getElementById('clearBtn');
-  const toolItems = Array.from(document.querySelectorAll('.tool-item'));
-
-  function matches(item, q, cat) {
-    const name = item.getAttribute('data-name') || '';
-    const c = item.getAttribute('data-cat') || '';
-    const text = (name + ' ' + item.querySelector('.desc').textContent).toLowerCase();
-    const qOk = q === '' || text.includes(q);
-    const cOk = (cat === 'all') || (c === cat);
-    return qOk && cOk;
-  }
-
-  function filterTools() {
-    const q = searchInput.value.trim().toLowerCase();
-    const cat = categoryFilter.value;
-    toolItems.forEach(item => {
-      item.style.display = matches(item, q, cat) ? 'flex' : 'none';
-    });
-  }
-
-  searchInput.addEventListener('input', filterTools);
-  categoryFilter.addEventListener('change', filterTools);
-  clearBtn.addEventListener('click', ()=>{
-    searchInput.value = '';
-    categoryFilter.value = 'all';
-    filterTools();
-    searchInput.focus();
-  });
-
-  // Accessibility: open in new tab already uses anchor target="_blank"
-  // No extra JS required for opening; anchors will handle
-</script>
-
 </body>
 </html>
+
