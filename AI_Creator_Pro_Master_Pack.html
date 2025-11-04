@@ -112,7 +112,7 @@
 
 <body>
   <script>
-    // Editable affiliate links; leave empty ("") to use official URL
+    // Editable affiliate links; leave empty to use official URLs
     const affiliateLinks = {
       chatgpt: "",
       canva: "",
@@ -128,7 +128,7 @@
       whisper: ""
     };
 
-    // Official URLs fallback if affiliate link is empty
+    // Official URLs for fallback
     const officialLinks = {
       chatgpt: "https://chat.openai.com/",
       canva: "https://www.canva.com/magic-studio/",
@@ -207,14 +207,11 @@
   </div>
 
   <script>
-    // Update href attributes for tool links based on affiliate or official URLs
-    const affiliateLinks = window.affiliateLinks || {};
-    const officialLinks = window.officialLinks || {};
-
+    // Apply URLs to each tool-button element dynamically
     Object.keys(officialLinks).forEach(key => {
-      const elem = document.getElementById(`link-${key}`);
-      if (elem) {
-        elem.href = affiliateLinks[key] && affiliateLinks[key].trim() !== ""
+      const button = document.getElementById(`link-${key}`);
+      if(button) {
+        button.href = affiliateLinks[key] && affiliateLinks[key].trim() !== ""
           ? affiliateLinks[key]
           : officialLinks[key];
       }
