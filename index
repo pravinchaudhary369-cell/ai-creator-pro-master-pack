@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Creator Pro Master Pack | Pravin Chaudhary</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #0a0f29, #001a4d);
+      color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background: linear-gradient(90deg, #004aad, #007bff);
+      padding: 20px;
+      color: white;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    p.tagline {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    main {
+      padding: 30px 15px;
+    }
+
+    a.button {
+      display: inline-block;
+      background: linear-gradient(90deg, #007bff, #00a6ff);
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      border-radius: 12px;
+      font-weight: 600;
+      margin: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px rgba(0, 123, 255, 0.4);
+    }
+
+    a.button:hover {
+      background: linear-gradient(90deg, #0056b3, #007bff);
+      transform: translateY(-2px);
+      box-shadow: 0 0 18px rgba(0, 150, 255, 0.8);
+    }
+
+    section {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px auto;
+      max-width: 700px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    footer {
+      background: #002a66;
+      padding: 10px 0;
+      color: #aaa;
+      font-size: 0.85rem;
+      margin-top: 30px;
+    }
+
+    .divider {
+      height: 1px;
+      width: 80%;
+      background: rgba(255,255,255,0.2);
+      margin: 25px auto;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.4rem; }
+      a.button { padding: 10px 18px; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>AI Creator Pro Master Pack</h1>
+    <p class="tagline">Build, Write, Design & Automate using AI — Created by <b>Pravin Chaudhary</b></p>
+  </header>
+
+  <main>
+    <section>
+      <h2>🚀 Quick Start</h2>
+      <p>Welcome to your professional AI creation toolkit. Use the buttons below to access the prompt system or AI tools dashboard.</p>
+
+      <a href="./AI_Creator_Master_Pack.html" class="button" target="_blank" onclick="window.open('AI_Creator_Master_Pack.html','_blank');">📘 Open Creator Master Pack</a>
+      <a href="./AI_Tool_Pack_Affiliate.html" class="button" target="_blank" onclick="window.open('AI_Tool_Pack_Affiliate.html','_blank');">⚙️ Open AI Tool Pack (50+ Tools)</a>
+
+      <div class="divider"></div>
+
+      <p><i>💡 Tip: You can use both sections together — create content in the Master Pack, and build visuals or automation using the Tool Pack.</i></p>
+    </section>
+
+    <section>
+      <h2>🌐 Works Online & Offline</h2>
+      <p>Keep all files in the same folder. You can open this dashboard in your mobile browser even without internet connection.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Pravin Chaudhary | AI Creator Pro Master Pack v1.0 | Royal Blue Edition</p>
+  </footer>
+
+</body>
+</html>
