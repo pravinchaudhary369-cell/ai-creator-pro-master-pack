@@ -111,6 +111,40 @@
 </head>
 
 <body>
+  <script>
+    // Editable affiliate links; leave empty ("") to use official URL
+    const affiliateLinks = {
+      chatgpt: "",
+      canva: "",
+      leonardo: "",
+      pika: "",
+      runway: "",
+      midjourney: "",
+      zapier: "",
+      gumroad: "",
+      appsumo: "",
+      promptbase: "",
+      elevenlabs: "",
+      whisper: ""
+    };
+
+    // Official URLs fallback if affiliate link is empty
+    const officialLinks = {
+      chatgpt: "https://chat.openai.com/",
+      canva: "https://www.canva.com/magic-studio/",
+      leonardo: "https://leonardo.ai/",
+      pika: "https://pikalabs.com/",
+      runway: "https://runwayml.com/",
+      midjourney: "https://www.midjourney.com/",
+      zapier: "https://zapier.com/",
+      gumroad: "https://gumroad.com/",
+      appsumo: "https://appsumo.com/",
+      promptbase: "https://promptbase.com/",
+      elevenlabs: "https://elevenlabs.io/",
+      whisper: "https://openai.com/blog/whisper"
+    };
+  </script>
+
   <div class="wrap">
     <h1>AI Creator Pro Master Pack — The AI Genius System</h1>
     <div class="byline">By Pravin Chaudhary — Empowering creators through AI innovation</div>
@@ -152,18 +186,18 @@
       <p>Tap any tool name below to open in your browser.</p>
 
       <div class="tool-grid">
-        <a class="tool-btn" href="https://your-affiliate-link.com/chatgpt" target="_blank">ChatGPT Pro</a>
-        <a class="tool-btn" href="https://your-affiliate-link.com/canva" target="_blank">Canva Magic Studio</a>
-        <a class="tool-btn" href="https://your-affiliate-link.com/leonardo" target="_blank">Leonardo AI</a>
-        <a class="tool-btn" href="https://your-affiliate-link.com/pika" target="_blank">Pika Labs</a>
-        <a class="tool-btn" href="https://your-affiliate-link.com/runway" target="_blank">Runway ML</a>
-        <a class="tool-btn" href="https://your-affiliate-link.com/midjourney" target="_blank">Midjourney</a>
-        <a class="tool-btn" href="https://your-affiliate-link.com/zapier" target="_blank">Zapier</a>
-        <a class="tool-btn" href="https://your-affiliate-link.com/gumroad" target="_blank">Gumroad</a>
-        <a class="tool-btn" href="https://your-affiliate-link.com/appsumo" target="_blank">AppSumo</a>
-        <a class="tool-btn" href="https://your-affiliate-link.com/promptbase" target="_blank">PromptBase</a>
-        <a class="tool-btn" href="https://your-affiliate-link.com/elevenlabs" target="_blank">ElevenLabs</a>
-        <a class="tool-btn" href="https://your-affiliate-link.com/whisper" target="_blank">OpenAI Whisper</a>
+        <a class="tool-btn" id="link-chatgpt" href="" target="_blank">ChatGPT Pro</a>
+        <a class="tool-btn" id="link-canva" href="" target="_blank">Canva Magic Studio</a>
+        <a class="tool-btn" id="link-leonardo" href="" target="_blank">Leonardo AI</a>
+        <a class="tool-btn" id="link-pika" href="" target="_blank">Pika Labs</a>
+        <a class="tool-btn" id="link-runway" href="" target="_blank">Runway ML</a>
+        <a class="tool-btn" id="link-midjourney" href="" target="_blank">Midjourney</a>
+        <a class="tool-btn" id="link-zapier" href="" target="_blank">Zapier</a>
+        <a class="tool-btn" id="link-gumroad" href="" target="_blank">Gumroad</a>
+        <a class="tool-btn" id="link-appsumo" href="" target="_blank">AppSumo</a>
+        <a class="tool-btn" id="link-promptbase" href="" target="_blank">PromptBase</a>
+        <a class="tool-btn" id="link-elevenlabs" href="" target="_blank">ElevenLabs</a>
+        <a class="tool-btn" id="link-whisper" href="" target="_blank">OpenAI Whisper</a>
       </div>
     </div>
 
@@ -171,5 +205,20 @@
       AI Creator Pro Master Pack © 2025 — Created by Pravin Chaudhary • The AI Genius System
     </footer>
   </div>
+
+  <script>
+    // Update href attributes for tool links based on affiliate or official URLs
+    const affiliateLinks = window.affiliateLinks || {};
+    const officialLinks = window.officialLinks || {};
+
+    Object.keys(officialLinks).forEach(key => {
+      const elem = document.getElementById(`link-${key}`);
+      if (elem) {
+        elem.href = affiliateLinks[key] && affiliateLinks[key].trim() !== ""
+          ? affiliateLinks[key]
+          : officialLinks[key];
+      }
+    });
+  </script>
 </body>
 </html>
