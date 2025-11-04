@@ -112,7 +112,7 @@
 
 <body>
   <script>
-    // Editable affiliate links; leave empty to use official URLs
+    // Editable affiliate links; leave empty to use official URL
     const affiliateLinks = {
       chatgpt: "",
       canva: "",
@@ -128,7 +128,7 @@
       whisper: ""
     };
 
-    // Official URLs for fallback
+    // Official URLs fallback if affiliate link is empty
     const officialLinks = {
       chatgpt: "https://chat.openai.com/",
       canva: "https://www.canva.com/magic-studio/",
@@ -143,6 +143,18 @@
       elevenlabs: "https://elevenlabs.io/",
       whisper: "https://openai.com/blog/whisper"
     };
+
+    // Set links only after DOM content is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      Object.keys(officialLinks).forEach(key => {
+        const button = document.getElementById(`link-${key}`);
+        if (button) {
+          button.href = affiliateLinks[key] && affiliateLinks[key].trim() !== ""
+            ? affiliateLinks[key]
+            : officialLinks[key];
+        }
+      });
+    });
   </script>
 
   <div class="wrap">
@@ -205,17 +217,5 @@
       AI Creator Pro Master Pack © 2025 — Created by Pravin Chaudhary • The AI Genius System
     </footer>
   </div>
-
-  <script>
-    // Apply URLs to each tool-button element dynamically
-    Object.keys(officialLinks).forEach(key => {
-      const button = document.getElementById(`link-${key}`);
-      if(button) {
-        button.href = affiliateLinks[key] && affiliateLinks[key].trim() !== ""
-          ? affiliateLinks[key]
-          : officialLinks[key];
-      }
-    });
-  </script>
 </body>
 </html>
