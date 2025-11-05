@@ -78,6 +78,36 @@
       margin: 25px auto;
     }
 
+    /* ===== Hostinger highlight (scoped) ===== */
+    #hostinger { --h-grad1:#7b5cff; --h-grad2:#4f46e5; --h-card:#12132a; --h-sub:#b7c0ff; --h-accent:#22e3a1; }
+    #hostinger .h-band{
+      background: linear-gradient(135deg,var(--h-grad1),var(--h-grad2));
+      border-radius: 16px; padding: 22px; position: relative; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+    }
+    #hostinger .h-badge{position:absolute;right:16px;top:16px;background:#0f172a;color:#eafff7;border:1px solid rgba(255,255,255,.18);padding:6px 10px;border-radius:10px;font-weight:800;font-size:12px}
+    #hostinger .h-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center}
+    @media (max-width:840px){#hostinger .h-grid{grid-template-columns:1fr}}
+    #hostinger .h-kicker{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.14);padding:8px 12px;border-radius:999px;color:#fff;font-weight:700;letter-spacing:.3px}
+    #hostinger .dot{width:8px;height:8px;border-radius:50%;background:var(--h-accent);box-shadow:0 0 0 6px rgba(34,227,161,.18)}
+    #hostinger .h-title{color:#fff;margin:14px 0 10px;font-size:clamp(22px,3.2vw,32px);line-height:1.15;font-weight:800}
+    #hostinger .h-sub{color:#fff;opacity:.95;font-size:clamp(14px,1.7vw,16px);max-width:60ch;margin:0 auto}
+    #hostinger .h-points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;margin:18px 0 0;text-align:left}
+    @media (max-width:560px){#hostinger .h-points{grid-template-columns:1fr}}
+    #hostinger .h-point{display:flex;gap:10px;color:#fff;align-items:flex-start}
+    #hostinger .h-check{width:18px;height:18px;margin-top:3px;flex:0 0 18px;background:conic-gradient(from 180deg at 50% 50%, #22e3a1 0 75%, #0ea5e9 75% 100%);border-radius:6px;box-shadow:inset 0 0 0 2px rgba(15,16,32,.65)}
+    #hostinger .h-card{background:var(--h-card);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px;color:#fff}
+    #hostinger .h-cta{display:flex;flex-direction:column;gap:12px}
+    #hostinger .h-btn{display:inline-block;text-align:center;padding:12px 18px;background:linear-gradient(135deg,#00d4ff,#00ffa7);color:#001016;text-decoration:none;border-radius:12px;font-weight:900;letter-spacing:.3px;transition:transform .12s ease, box-shadow .12s ease;box-shadow:0 12px 30px rgba(0, 212, 255,.25)}
+    #hostinger .h-btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(0,212,255,.35)}
+    #hostinger .h-ghost{display:inline-block;text-align:center;padding:10px 16px;background:transparent;border:1px solid rgba(255,255,255,.25);color:#e5ebff;border-radius:12px;font-weight:700;text-decoration:none}
+    #hostinger .h-seals{display:flex;flex-wrap:wrap;gap:8px;color:#d8ffef;font-size:12px;opacity:.9;justify-content:center}
+    #hostinger .h-seals span{background:rgba(34,227,161,.12);border:1px solid rgba(34,227,161,.35);color:#bbffe6;padding:6px 8px;border-radius:8px}
+    #hostinger .h-note{color:#e8edff;opacity:.85;font-size:12px;margin:0}
+    @media (prefers-reduced-motion:no-preference){
+      #hostinger .h-btn{will-change:transform}
+    }
+
     @media (max-width: 600px) {
       h1 { font-size: 1.4rem; }
       a.button { padding: 10px 18px; font-size: 0.9rem; }
@@ -102,6 +132,44 @@
       <div class="divider"></div>
 
       <p><i>💡 Tip: You can use both sections together — create content in the Master Pack, and build visuals or automation using the Tool Pack.</i></p>
+    </section>
+
+    <!-- ======================= -->
+    <!-- HOSTINGER HIGHLIGHT 🟣  -->
+    <!-- ======================= -->
+    <section id="hostinger">
+      <div class="h-band">
+        <div class="h-badge">🔥 Up to 85% OFF • Free Domain + SSL</div>
+
+        <div class="h-grid">
+          <!-- LEFT: copy -->
+          <div>
+            <div class="h-kicker"><span class="dot"></span> BONUS TOOL — HOSTINGER</div>
+            <h3 class="h-title">Lightning-fast hosting + AI Website Builder for creators & entrepreneurs</h3>
+            <p class="h-sub">
+              Launch your site, portfolio, or digital product hub in <b>minutes</b> — not days. No coding needed.
+              Describe your business, and Hostinger’s AI builds your layout, copy, and SEO in under 60 seconds.
+            </p>
+
+            <div class="h-points">
+              <div class="h-point"><span class="h-check"></span><div><b>Ultra-fast + 99.9% uptime</b><br>Powered by LiteSpeed for SEO-friendly speed.</div></div>
+              <div class="h-point"><span class="h-check"></span><div><b>AI Website Builder</b><br>Describe → get a complete, editable site.</div></div>
+              <div class="h-point"><span class="h-check"></span><div><b>Free domain + SSL (1 year)</b><br>Launch a trusted brand instantly.</div></div>
+              <div class="h-point"><span class="h-check"></span><div><b>1-click WordPress</b><br>Blogs, shops, funnels ready to go.</div></div>
+            </div>
+          </div>
+
+          <!-- RIGHT: offer card -->
+          <div class="h-card h-cta">
+            <a class="h-btn" href="YOUR_HOSTINGER_LINK" target="_blank" rel="noopener">🚀 Get Hostinger Creator Deal</a>
+            <a class="h-ghost" href="YOUR_HOSTINGER_LINK" target="_blank" rel="noopener">Preview AI Site →</a>
+            <div class="h-seals">
+              <span>24/7 Support</span><span>Business Email</span><span>AI SEO Tools</span><span>Secure SSL</span>
+            </div>
+            <p class="h-note">Perfect for portfolios, agencies, and product landing pages. Plans start under ₹69/mo.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section>
