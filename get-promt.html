@@ -9,7 +9,7 @@
     --bg1:#0a0f29; --bg2:#001a4d; --card:rgba(255,255,255,.06);
     --line:rgba(255,255,255,.2); --text:#f5f5f5; --sub:#c9d6ff;
     --blue1:#007bff; --blue2:#00a6ff;
-    --accent:#7b5cff; --accent2:#4f46e5; --green:#22e3a1;
+    --accent:#7b5cff; --accent2:#4f46e5; --green:#22e3a1; --warning:#ffe9a6;
   }
   *{box-sizing:border-box}
   body{
@@ -32,12 +32,12 @@
   .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
   @media (max-width:800px){.grid{grid-template-columns:1fr}}
   label{display:block; font-weight:600; margin:6px 0 6px}
-  select, input[type="text"], textarea{
+  select, input[type="text"], input[type="search"], textarea{
     width:100%; background:rgba(255,255,255,.08); color:#fff;
     border:1px solid var(--line); border-radius:10px; padding:10px 12px;
     outline:none; transition:box-shadow .12s ease,border-color .12s ease;
   }
-  select:focus, input[type="text"]:focus, textarea:focus{
+  select:focus, input[type="text"]:focus, input[type="search"]:focus, textarea:focus{
     border-color:#7bb6ff; box-shadow:0 0 0 3px rgba(0,123,255,.25);
   }
   .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
@@ -57,13 +57,20 @@
   .muted{color:var(--sub); font-size:.92rem}
   .badge{display:inline-block; background:linear-gradient(135deg,var(--accent),var(--accent2)); padding:6px 10px; border-radius:999px; font-weight:800}
   .out{min-height:180px}
-  .copy-wrap{display:flex; gap:10px; align-items:center; justify-content:flex-end}
+  .copy-wrap{display:flex; gap:10px; align-items:center; justify-content:flex-end; flex-wrap:wrap}
   .divider{height:1px; background:var(--line); margin:18px 0}
   footer{width:100%; text-align:center; color:#aaa; font-size:.85rem; padding:18px 0; background:#002a66; margin-top:18px}
   .pill{display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.06)}
-  .inline{display:flex; gap:10px; flex-wrap:wrap}
-  .warn{font-size:.85rem; color:#ffe9a6}
+  .inline{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+  .warn{font-size:.85rem; color:var(--warning)}
   code{background:rgba(255,255,255,.12); padding:0 6px; border-radius:6px}
+  .actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+  .fav{
+    appearance:none; border:none; background:transparent; cursor:pointer; font-size:20px; line-height:1; padding:6px 8px; border-radius:10px;
+  }
+  .fav:hover{background:rgba(255,255,255,.08)}
+  .fav[data-active="true"]{filter:drop-shadow(0 0 6px rgba(255,215,0,.5))}
+  .tiny{font-size:.85rem; opacity:.9}
 </style>
 </head>
 <body>
@@ -76,7 +83,7 @@
 
   <!-- Picker -->
   <section class="panel">
-    <div class="inline" style="justify-content:space-between; align-items:center;">
+    <div class="inline" style="justify-content:space-between;">
       <span class="kicker"><span class="dot"></span> Smart Prompt Builder</span>
       <span class="pill">Prompts loaded: <b id="count">0</b></span>
     </div>
@@ -93,6 +100,20 @@
       </div>
     </div>
 
+    <div class="inline" style="margin-top:12px;">
+      <div style="flex:1; min-width:240px;">
+        <label for="search" class="tiny">Search in this category (title + template)</label>
+        <input id="search" type="search" placeholder="e.g., title, hashtags, product, palette…" />
+      </div>
+      <label class="pill" title="Show only your starred prompts">
+        <input type="checkbox" id="onlyFavs" style="accent-color:#ffd700; margin-right:6px;"> ⭐ Show only favorites
+      </label>
+      <div class="actions">
+        <button id="favToggle" class="fav" aria-label="Toggle favorite" title="Toggle favorite">⭐</button>
+        <span id="resultCount" class="tiny muted"></span>
+      </div>
+    </div>
+
     <div id="fields" class="panel" style="margin-top:14px;"></div>
 
     <div class="row" style="margin-top:8px;">
@@ -103,7 +124,7 @@
 
   <!-- Optional style add-ons -->
   <section class="panel">
-    <h2 class="inline" style="gap:10px; align-items:center;">
+    <h2 class="inline" style="gap:10px;">
       <span class="badge">Optional</span> Quick Style Add-ons
     </h2>
     <p class="muted">Auto-append brand style to your prompt (from your Universal Template System).</p>
@@ -134,6 +155,7 @@
     <textarea id="output" class="out" placeholder="Your generated prompt will appear here..." spellcheck="false"></textarea>
     <div class="copy-wrap" style="margin-top:10px;">
       <button id="copy" class="btn">📎 Copy to Clipboard</button>
+      <button id="copyJson" class="btn ghost">{} Copy as JSON</button>
     </div>
   </section>
 
@@ -143,6 +165,7 @@
     <p class="muted">
       Pick a category & prompt, fill the placeholders, and click <b>Generate</b>.
       Use the optional style add-ons to append your Universal Template: voice, color tone, core value, and font set.
+      Use ⭐ to mark favorite prompts; they’re saved to your browser.
     </p>
   </section>
 
@@ -247,7 +270,6 @@ const LIB = {
       placeholders:["a product"] }
   ],
 
-  /* NEW: Proper separate category */
   "🛍️ E-commerce & Products": [
     { id:26, title:"Product Title Generator",
       template:"Write 10 SEO-friendly product titles for [a product type] with keywords that improve CTR on [platform name like Amazon or Etsy]. Keep under 80 characters.",
@@ -340,6 +362,15 @@ const LIB = {
 };
 
 /** ================================
+ *  Favorites & Search state
+ *  ================================ */
+const FAV_KEY = 'acp_favs_v1';
+let favs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]')); // keys: `${cat}::${id}`
+const getKey = (cat,id)=>`${cat}::${id}`;
+const isFav = (cat,id)=>favs.has(getKey(cat,id));
+const saveFavs = ()=>localStorage.setItem(FAV_KEY, JSON.stringify([...favs]));
+
+/** ================================
  *  UI Wiring
  *  ================================ */
 const categoryEl = document.getElementById('category');
@@ -347,6 +378,10 @@ const promptEl   = document.getElementById('prompt');
 const fieldsWrap = document.getElementById('fields');
 const outputEl   = document.getElementById('output');
 const countEl    = document.getElementById('count');
+const searchEl   = document.getElementById('search');
+const onlyFavsEl = document.getElementById('onlyFavs');
+const favToggle  = document.getElementById('favToggle');
+const resultCount= document.getElementById('resultCount');
 
 function init(){
   // Populate categories
@@ -356,24 +391,51 @@ function init(){
     const opt=document.createElement('option');
     opt.value=cat; opt.textContent=cat; categoryEl.appendChild(opt);
   });
-  // Ensure a selected category
   categoryEl.value = cats[0];
-  // Populate first category prompts
-  populatePrompts(categoryEl.value);
-  // Count prompts
+  // Initial prompts
+  refreshPromptList();
+  // Count all prompts
   countEl.textContent = Object.values(LIB).reduce((acc,arr)=>acc+arr.length,0);
+  // Sync fav star for first prompt
+  syncFavStar();
 }
 
-function populatePrompts(cat){
-  promptEl.innerHTML='';
+function refreshPromptList(){
+  const cat = categoryEl.value;
   const arr = LIB[cat] || [];
-  arr.forEach(p=>{
+
+  // Apply search & favorites filter
+  const q = (searchEl.value || "").toLowerCase().trim();
+  const onlyFav = !!onlyFavsEl.checked;
+
+  const filtered = arr.filter(p=>{
+    const matchesFav = !onlyFav || isFav(cat,p.id);
+    if(!matchesFav) return false;
+    if(!q) return true;
+    const hay = (p.title + " " + p.template).toLowerCase();
+    return hay.includes(q);
+  });
+
+  promptEl.innerHTML='';
+  filtered.forEach(p=>{
     const opt=document.createElement('option');
-    opt.value=p.id; opt.textContent = `${p.id}. ${p.title}`;
+    opt.value=p.id;
+    const star = isFav(cat,p.id) ? "★" : "☆";
+    opt.textContent = `${p.id}. ${p.title} ${star}`;
     promptEl.appendChild(opt);
   });
-  if(arr.length) renderFields(cat, arr[0].id);
-  else fieldsWrap.innerHTML = '<em class="muted">No prompts in this category yet.</em>';
+
+  resultCount.textContent = filtered.length !== arr.length
+    ? `${filtered.length} / ${arr.length} in this category`
+    : `${arr.length} in this category`;
+
+  if(filtered.length){
+    promptEl.value = filtered[0].id;
+    renderFields(cat, filtered[0].id);
+  }else{
+    fieldsWrap.innerHTML = '<em class="muted">No prompts match your search/filter.</em>';
+  }
+  syncFavStar();
 }
 
 function renderFields(cat, id){
@@ -399,14 +461,45 @@ function renderFields(cat, id){
     grid.appendChild(d);
   });
   fieldsWrap.appendChild(grid);
+  syncFavStar();
 }
 
-categoryEl.addEventListener('change', e=>{
-  populatePrompts(e.target.value);
-});
-promptEl.addEventListener('change', e=>{
+function syncFavStar(){
   const cat = categoryEl.value;
-  renderFields(cat, e.target.value);
+  const id = promptEl.value;
+  const active = isFav(cat,id);
+  favToggle.dataset.active = active ? "true" : "false";
+  favToggle.textContent = active ? "⭐" : "☆";
+  favToggle.title = active ? "Remove from favorites" : "Add to favorites";
+}
+
+/* --- Events --- */
+categoryEl.addEventListener('change', ()=>{
+  searchEl.value = '';
+  onlyFavsEl.checked = false;
+  refreshPromptList();
+});
+
+promptEl.addEventListener('change', ()=>{
+  renderFields(categoryEl.value, promptEl.value);
+});
+
+searchEl.addEventListener('input', ()=>{
+  refreshPromptList();
+});
+
+onlyFavsEl.addEventListener('change', ()=>{
+  refreshPromptList();
+});
+
+favToggle.addEventListener('click', ()=>{
+  const cat = categoryEl.value;
+  const id = promptEl.value;
+  const key = getKey(cat,id);
+  if(isFav(cat,id)) favs.delete(key); else favs.add(key);
+  saveFavs();
+  // Update labels (stars in dropdown) & button state
+  refreshPromptList();
 });
 
 document.getElementById('reset').addEventListener('click', ()=>{
@@ -429,7 +522,6 @@ document.getElementById('generate').addEventListener('click', ()=>{
     txt = txt.replace(re, val);
   });
 
-  // Optional style block
   const tone   = document.getElementById('tone').value.trim();
   const palette= document.getElementById('palette').value.trim();
   const core   = document.getElementById('core').value.trim();
@@ -455,6 +547,45 @@ document.getElementById('copy').addEventListener('click', async (e)=>{
     setTimeout(()=>{btn.textContent = old;}, 1200);
   }catch(err){
     alert('Copy failed. Select the text and press Ctrl/Cmd+C.');
+  }
+});
+
+document.getElementById('copyJson').addEventListener('click', async (e)=>{
+  const cat = categoryEl.value;
+  const id = promptEl.value;
+  const obj = (LIB[cat]||[]).find(x=>String(x.id)===String(id));
+  if(!obj){ return alert('Select a prompt first.'); }
+
+  const placeholders = {};
+  [...fieldsWrap.querySelectorAll('input')].forEach(inp=>{
+    placeholders[inp.getAttribute('data-ph')] = inp.value.trim();
+  });
+
+  const tone   = document.getElementById('tone').value.trim();
+  const palette= document.getElementById('palette').value.trim();
+  const core   = document.getElementById('core').value.trim();
+  const font   = document.getElementById('fontset').value.trim();
+
+  const payload = {
+    category: cat,
+    prompt_id: Number(id),
+    prompt_title: obj.title,
+    template: obj.template,
+    placeholders_filled: placeholders,
+    style: { tone, palette, core, fontset: font },
+    generated_text: outputEl.value || null,
+    ts: new Date().toISOString()
+  };
+
+  const json = JSON.stringify(payload, null, 2);
+  try{
+    await navigator.clipboard.writeText(json);
+    const btn = e.currentTarget;
+    const old = btn.textContent;
+    btn.textContent = '✅ JSON Copied';
+    setTimeout(()=>{btn.textContent = old;}, 1200);
+  }catch(err){
+    alert('Copy failed. You can select the prompt text and press Ctrl/Cmd+C.');
   }
 });
 
