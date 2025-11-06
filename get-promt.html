@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Get Prompt | AI Creator Pro Master Pack</title>
+<style>
+  :root{
+    --bg1:#0a0f29; --bg2:#001a4d; --card:rgba(255,255,255,.06);
+    --line:rgba(255,255,255,.2); --text:#f5f5f5; --sub:#c9d6ff;
+    --blue1:#007bff; --blue2:#00a6ff;
+    --accent:#7b5cff; --accent2:#4f46e5; --green:#22e3a1;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    color:var(--text); background:linear-gradient(180deg,var(--bg1),var(--bg2));
+    min-height:100dvh; display:flex; flex-direction:column; align-items:center;
+  }
+  header{
+    width:100%; background:linear-gradient(90deg,#004aad,#007bff);
+    padding:18px 14px; text-align:center; box-shadow:0 0 15px rgba(0,0,0,.3);
+  }
+  header h1{margin:0; font-size:1.6rem}
+  header p{margin:6px 0 0; opacity:.9; font-size:.95rem}
+  main{width:100%; max-width:980px; padding:24px 14px; margin:auto}
+  .panel{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:18px; margin:14px 0; box-shadow:0 0 20px rgba(0,0,0,.26);
+  }
+  h2{margin:0 0 10px; font-size:1.25rem}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  @media (max-width:800px){.grid{grid-template-columns:1fr}}
+  label{display:block; font-weight:600; margin:6px 0 6px}
+  select, input[type="text"], textarea{
+    width:100%; background:rgba(255,255,255,.08); color:#fff;
+    border:1px solid var(--line); border-radius:10px; padding:10px 12px;
+    outline:none; transition:box-shadow .12s ease,border-color .12s ease;
+  }
+  select:focus, input[type="text"]:focus, textarea:focus{
+    border-color:#7bb6ff; box-shadow:0 0 0 3px rgba(0,123,255,.25);
+  }
+  .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  @media (max-width:700px){.row{grid-template-columns:1fr}}
+  .btn{
+    display:inline-block; background:linear-gradient(90deg,var(--blue1),var(--blue2));
+    color:#fff; text-decoration:none; padding:12px 18px; border-radius:12px;
+    font-weight:700; letter-spacing:.2px; border:none; cursor:pointer;
+    box-shadow:0 0 12px rgba(0,123,255,.35); transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover{transform:translateY(-2px); box-shadow:0 0 18px rgba(0,150,255,.55)}
+  .btn.ghost{
+    background:transparent; border:1px solid var(--line); box-shadow:none; color:#e7ecff;
+  }
+  .kicker{display:inline-flex; gap:8px; align-items:center; background:rgba(255,255,255,.12); padding:6px 10px; border-radius:999px; font-weight:700}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green); box-shadow:0 0 0 6px rgba(34,227,161,.18)}
+  .muted{color:var(--sub); font-size:.92rem}
+  .badge{display:inline-block; background:linear-gradient(135deg,var(--accent),var(--accent2)); padding:6px 10px; border-radius:999px; font-weight:800}
+  .out{min-height:180px}
+  .copy-wrap{display:flex; gap:10px; align-items:center; justify-content:flex-end}
+  .divider{height:1px; background:var(--line); margin:18px 0}
+  footer{width:100%; text-align:center; color:#aaa; font-size:.85rem; padding:18px 0; background:#002a66; margin-top:18px}
+  .pill{display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.06)}
+  .inline{display:flex; gap:10px; flex-wrap:wrap}
+  .warn{font-size:.85rem; color:#ffe9a6}
+</style>
+</head>
+<body>
+<header>
+  <h1>🧠 Get Prompt — AI Creator Pro</h1>
+  <p>Choose a category & prompt, fill a couple of details, and copy your ready-to-use Smart Prompt.</p>
+</header>
+
+<main>
+
+  <!-- Picker -->
+  <section class="panel">
+    <div class="inline" style="justify-content:space-between; align-items:center;">
+      <span class="kicker"><span class="dot"></span> Smart Prompt Builder</span>
+      <span class="pill">Prompts loaded: <b id="count">0</b></span>
+    </div>
+    <div class="divider"></div>
+
+    <div class="grid">
+      <div>
+        <label for="category">Select Category</label>
+        <select id="category"></select>
+      </div>
+      <div>
+        <label for="prompt">Select Prompt</label>
+        <select id="prompt"></select>
+      </div>
+    </div>
+
+    <div id="fields" class="panel" style="margin-top:14px;"></div>
+
+    <div class="row" style="margin-top:8px;">
+      <button id="generate" class="btn">✨ Generate Prompt</button>
+      <button id="reset" class="btn ghost">Reset</button>
+    </div>
+  </section>
+
+  <!-- Optional style add-ons -->
+  <section class="panel">
+    <h2 class="inline" style="gap:10px; align-items:center;">
+      <span class="badge">Optional</span> Quick Style Add-ons
+    </h2>
+    <p class="muted">Auto-append brand style to your prompt (from your Universal Template System).</p>
+    <div class="grid">
+      <div>
+        <label for="tone">Voice / Tone (e.g., Friendly / Luxury / Expert)</label>
+        <input type="text" id="tone" placeholder="Friendly / Luxury / Expert"/>
+      </div>
+      <div>
+        <label for="palette">Color Tone / Palette (e.g., Nature Ease / Neo Night)</label>
+        <input type="text" id="palette" placeholder="Solar Glow / Nature Ease / Corporate Steel"/>
+      </div>
+      <div>
+        <label for="core">Core Value (e.g., Trust / Innovation / Energy)</label>
+        <input type="text" id="core" placeholder="Trust / Innovation / Energy"/>
+      </div>
+      <div>
+        <label for="fontset">Font Set (e.g., Creative Pop / Minimal Edge)</label>
+        <input type="text" id="fontset" placeholder="Creative Pop / Modern Bold"/>
+      </div>
+    </div>
+    <p class="warn">Tip: Leave blank if you don’t want the style block added.</p>
+  </section>
+
+  <!-- Output -->
+  <section class="panel">
+    <h2>📋 Your Smart Prompt</h2>
+    <textarea id="output" class="out" placeholder="Your generated prompt will appear here..." spellcheck="false"></textarea>
+    <div class="copy-wrap" style="margin-top:10px;">
+      <button id="copy" class="btn">📎 Copy to Clipboard</button>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="panel">
+    <h2>How it works</h2>
+    <p class="muted">
+      Pick a category & prompt, fill the placeholders, and click <b>Generate</b>.
+      Use the optional style add-ons to append your Universal Template: voice, color tone, core value, and font set.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  © 2025 Pravin Chaudhary • AI Creator Pro Master Pack
+</footer>
+
+<script>
+/** ================================
+ *  Prompt Library (1–25 preloaded)
+ *  ================================ */
+const LIB = {
+  "🎨 Logo & Branding": [
+    {
+      id: 1,
+      title: "Brand Logo Concept",
+      template: "Create a minimalist logo concept for [a brand name] that sells [product type]. Use a [color tone] palette with [symbol or shape] elements that represent [core value]. Provide 3 distinct ideas.",
+      placeholders: ["a brand name","product type","color tone","symbol or shape","core value"]
+    },
+    {
+      id: 2,
+      title: "Brand Story",
+      template: "Write a 150-word brand story for [a brand name] focused on [mission or emotion]. Use a [tone: friendly / premium / youthful]. End with a powerful tagline.",
+      placeholders: ["a brand name","mission or emotion","tone: friendly / premium / youthful"]
+    },
+    {
+      id: 3,
+      title: "Brand Color Palette",
+      template: "Suggest 5 color palettes for [a business type] based on [emotion / mood]. Provide hex codes and brief explanations for each.",
+      placeholders: ["a business type","emotion / mood"]
+    },
+    {
+      id: 4,
+      title: "Logo Tagline Generator",
+      template: "Generate 10 catchy taglines for [a brand name] that offers [product or service]. Each should be under 6 words and sound [emotion].",
+      placeholders: ["a brand name","product or service","emotion"]
+    },
+    {
+      id: 5,
+      title: "Brand Moodboard Concept",
+      template: "Create a visual moodboard concept for [a brand theme] showing textures, fonts, and colors inspired by [style type]. List keywords for AI image search.",
+      placeholders: ["a brand theme","style type"]
+    }
+  ],
+
+  "📱 Social Media": [
+    {
+      id: 6,
+      title: "Instagram Post Ideas",
+      template: "Create 10 Instagram post ideas for [a niche or brand] targeting [age group]. Include hook lines + CTA.",
+      placeholders: ["a niche or brand","age group"]
+    },
+    {
+      id: 7,
+      title: "Instagram Carousel Post",
+      template: "Create a 5-slide Instagram carousel about [your topic or product] using a [friendly / bold / luxury] tone. Slide 1: Headline. Slide 2–4: 3 value points with emojis. Slide 5: CTA to follow / save / visit.",
+      placeholders: ["your topic or product","friendly / bold / luxury"]
+    },
+    {
+      id: 8,
+      title: "Social Media Caption Generator",
+      template: "Generate 10 Instagram captions for [a niche or brand] using a [tone style]. Each should be under 20 words and include 1–2 emojis.",
+      placeholders: ["a niche or brand","tone style"]
+    },
+    {
+      id: 9,
+      title: "Hashtag Set Creator",
+      template: "Generate 30 niche-specific hashtags for [a topic] mixing broad + micro tags. Return in 3 groups (Reach / Niche / Community).",
+      placeholders: ["a topic"]
+    },
+    {
+      id: 10,
+      title: "Social Media Content Plan",
+      template: "Create a 7-day social media plan for [a brand type] with daily post ideas, themes and best posting times.",
+      placeholders: ["a brand type"]
+    }
+  ],
+
+  "🧠 Blog & Copywriting": [
+    {
+      id: 11,
+      title: "Blog Outline",
+      template: "Draft a complete blog outline for [a topic] targeting [keyword audience]. Include H2/H3 headings and intro.",
+      placeholders: ["a topic","keyword audience"]
+    },
+    {
+      id: 12,
+      title: "SEO Keyword List",
+      template: "List 30 SEO keywords and search intent phrases for [a topic]. Mark difficulty and traffic potential.",
+      placeholders: ["a topic"]
+    },
+    {
+      id: 13,
+      title: "Engaging Blog Intro",
+      template: "Write a 120-word blog introduction for [a topic]. Start with a question or statistic, add hook, end with CTA.",
+      placeholders: ["a topic"]
+    },
+    {
+      id: 14,
+      title: "Product Description",
+      template: "Write 3 SEO-friendly product descriptions for [a product type]. Include benefits, features & CTA.",
+      placeholders: ["a product type"]
+    },
+    {
+      id: 15,
+      title: "Email Newsletter Idea",
+      template: "Generate weekly email newsletter ideas for [a niche]. Each email must have subject line + main idea + CTA.",
+      placeholders: ["a niche"]
+    }
+  ],
+
+  "🎬 Video & Reels": [
+    {
+      id: 16,
+      title: "Video Script",
+      template: "Create a 60-second script for [a topic]. Include hook + problem + solution + CTA. Tone = [fun / inspirational].",
+      placeholders: ["a topic","fun / inspirational"]
+    },
+    {
+      id: 17,
+      title: "Ad Video Idea",
+      template: "Generate 3 creative video ad concepts for [a product type]. Each should target [audience] with unique hook.",
+      placeholders: ["a product type","audience"]
+    },
+    {
+      id: 18,
+      title: "YouTube Title & Description",
+      template: "Suggest 5 click-worthy YouTube titles for [a topic] with keywords. Add optimized description and tags.",
+      placeholders: ["a topic"]
+    },
+    {
+      id: 19,
+      title: "Shorts / Reel Hook",
+      template: "Write 10 short hook lines for [a topic] under 7 words each that spark curiosity or emotion.",
+      placeholders: ["a topic"]
+    },
+    {
+      id: 20,
+      title: "Video Content Plan",
+      template: "Create a 30-day video content plan for [a niche]. Include theme, hook, and upload frequency.",
+      placeholders: ["a niche"]
+    }
+  ],
+
+  "💼 Business & Marketing": [
+    {
+      id: 21,
+      title: "Business Name Generator",
+      template: "Generate 10 unique brand names for [a business type] with [emotion / value]. Each must be domain-available.",
+      placeholders: ["a business type","emotion / value"]
+    },
+    {
+      id: 22,
+      title: "Elevator Pitch",
+      template: "Create a 30-second elevator pitch for [a product or service] showing problem → solution → impact.",
+      placeholders: ["a product or service"]
+    },
+    {
+      id: 23,
+      title: "Landing Page Copy",
+      template: "Write high-converting landing page copy for [a course or product]. Sections: Headline / Pain / Solution / CTA.",
+      placeholders: ["a course or product"]
+    },
+    {
+      id: 24,
+      title: "Customer Persona",
+      template: "Create a customer persona for [a brand]. Include age, goals, pain points, buying behavior.",
+      placeholders: ["a brand"]
+    },
+    {
+      id: 25,
+      title: "Marketing Campaign Idea",
+      template: "Generate 3 marketing campaign concepts for [a product]. Include platform, budget idea and key message.",
+      placeholders: ["a product"]
+    },
+    {
+      id: 26,
+      title: "Product Title Generator",
+      template: "Write 10 SEO-friendly product titles for [a product type] with keywords that improve CTR on [platform name like Amazon or Etsy]. Keep under 80 characters.",
+      placeholders: ["a product type","platform name like Amazon or Etsy"]
+    },
+    {
+      id: 27,
+      title: "Product Feature List",
+      template: "Create 5 highlight features and benefits for [a product] focusing on how it solves [problem]. Use simple bullet points.",
+      placeholders: ["a product","problem"]
+    },
+    {
+      id: 28,
+      title: "Upsell / Cross-sell Ideas",
+      template: "Suggest 10 upsell and cross-sell ideas for [a product type] sold on [a platform]. Include bundle concept and pricing strategy.",
+      placeholders: ["a product type","a platform"]
+    },
+    {
+      id: 29,
+      title: "Product FAQ Generator",
+      template: "Create 10 FAQ and answers for [a product type] covering delivery, size, and returns in friendly tone.",
+      placeholders: ["a product type"]
+    },
+    {
+      id: 30,
+      title: "E-commerce Review Reply",
+      template: "Write 3 professional reply examples to a customer who said: ‘[insert review]’. Tone = [thankful / helpful / apologetic].",
+      placeholders: ["insert review","thankful / helpful / apologetic"]
+    }
+  ],
+
+  "📊 Data & Automation": [
+    {
+      id: 31,
+      title: "Excel Formula Helper",
+      template: "Write an Excel formula to [count unique values / do X] and explain each part step by step.",
+      placeholders: ["count unique values / do X"]
+    },
+    {
+      id: 32,
+      title: "Automation Workflow",
+      template: "Design a no-code automation workflow to [task like send emails or post updates] using [a tool like Zapier or Make]. Include step-by-step setup.",
+      placeholders: ["task like send emails or post updates","a tool like Zapier or Make"]
+    },
+    {
+      id: 33,
+      title: "Data Cleaning Script",
+      template: "Write a Python script to clean CSV data by removing duplicates and invalid emails. Include comments.",
+      placeholders: []
+    },
+    {
+      id: 34,
+      title: "Google Sheet Automation",
+      template: "Create Apps Script code to send WhatsApp message when a new row is added in Google Sheet. Include setup steps.",
+      placeholders: []
+    },
+    {
+      id: 35,
+      title: "AI Automation Idea Generator",
+      template: "List 20 daily tasks that [a freelancer / marketer / shop owner] can automate using free AI tools. Show tool name + task type.",
+      placeholders: ["a freelancer / marketer / shop owner"]
+    }
+  ],
+
+  "🧑‍🎓 Education & Course Creation": [
+    {
+      id: 36,
+      title: "Course Outline",
+      template: "Design a complete course outline for [a topic]. Include module names, learning outcomes and project idea.",
+      placeholders: ["a topic"]
+    },
+    {
+      id: 37,
+      title: "Lesson Plan",
+      template: "Create a 45-minute lesson plan on [a topic] for [student age]. Include objective, activities and assessment.",
+      placeholders: ["a topic","student age"]
+    },
+    {
+      id: 38,
+      title: "Quiz Generator",
+      template: "Create 10 MCQ quiz questions on [a topic]. Include 4 options each and mark correct answers.",
+      placeholders: ["a topic"]
+    },
+    {
+      id: 39,
+      title: "Course Sales Page",
+      template: "Write a high-converting sales page for [a course topic]. Include problem → benefit → social proof → CTA.",
+      placeholders: ["a course topic"]
+    },
+    {
+      id: 40,
+      title: "Student Feedback Form",
+      template: "Generate 10 questions for a student feedback form about [a course name]. Include rating and open questions.",
+      placeholders: ["a course name"]
+    }
+  ],
+
+  "✍️ Design & Creative": [
+    {
+      id: 41,
+      title: "Poster Concept",
+      template: "Generate a poster concept for [a theme] event using [color style], [text mood], and [core message]. Describe layout and elements.",
+      placeholders: ["a theme","color style","text mood","core message"]
+    },
+    {
+      id: 42,
+      title: "Thumbnail Prompt",
+      template: "Describe a clickable YouTube thumbnail for [a topic] showing [emotion] face and text like ‘[text]’. Mention colors and composition.",
+      placeholders: ["a topic","emotion","text"]
+    },
+    {
+      id: 43,
+      title: "Banner Ad Design",
+      template: "Create banner ad concept for [a product or service]. Include headline, CTA and visual description.",
+      placeholders: ["a product or service"]
+    },
+    {
+      id: 44,
+      title: "Brochure Content",
+      template: "Write a 2-page brochure copy for [a service or event]. Sections: About / Offer / Testimonials / CTA.",
+      placeholders: ["a service or event"]
+    },
+    {
+      id: 45,
+      title: "Creative Theme Pack",
+      template: "Create a design theme pack for [a niche]. Include color scheme, font pair, and AI prompt to generate matching visuals.",
+      placeholders: ["a niche"]
+    }
+  ],
+
+  "🌍 Personal & Lifestyle": [
+    {
+      id: 46,
+      title: "Daily Planner Template",
+      template: "Create a daily planner for [a goal or profession]. Include time blocks and habit tracking slots.",
+      placeholders: ["a goal or profession"]
+    },
+    {
+      id: 47,
+      title: "Personal Goal Prompt",
+      template: "Write a SMART goal plan for [a goal like fitness / finance]. Include 5 milestones and tracking method.",
+      placeholders: ["a goal like fitness / finance"]
+    },
+    {
+      id: 48,
+      title: "Morning Affirmations",
+      template: "Write 10 personalized affirmations for someone working in [a profession]. Tone = [calm / motivational].",
+      placeholders: ["a profession","calm / motivational"]
+    },
+    {
+      id: 49,
+      title: "AI Fitness Routine",
+      template: "Create a 7-day fitness plan for [a goal like weight loss / muscle gain] without gym equipment. Add diet tips.",
+      placeholders: ["a goal like weight loss / muscle gain"]
+    },
+    {
+      id: 50,
+      title: "Personal Finance Tracker",
+      template: "Design a monthly finance tracker for [a profession or individual]. Include income, expense, savings columns.",
+      placeholders: ["a profession or individual"]
+    }
+  ]
+};
+/** ================================
+ *  UI Wiring
+ *  ================================ */
+const categoryEl = document.getElementById('category');
+const promptEl   = document.getElementById('prompt');
+const fieldsWrap = document.getElementById('fields');
+const outputEl   = document.getElementById('output');
+const countEl    = document.getElementById('count');
+
+function init(){
+  // Populate categories
+  Object.keys(LIB).forEach(cat=>{
+    const opt=document.createElement('option');
+    opt.value=cat; opt.textContent=cat; categoryEl.appendChild(opt);
+  });
+  // Populate first category prompts
+  populatePrompts(categoryEl.value || Object.keys(LIB)[0]);
+  // Count prompts
+  countEl.textContent = Object.values(LIB).reduce((acc,arr)=>acc+arr.length,0);
+}
+function populatePrompts(cat){
+  promptEl.innerHTML='';
+  LIB[cat].forEach(p=>{
+    const opt=document.createElement('option');
+    opt.value=p.id; opt.textContent = `${p.id}. ${p.title}`;
+    promptEl.appendChild(opt);
+  });
+  renderFields(cat, LIB[cat][0].id);
+}
+function renderFields(cat, id){
+  const obj = LIB[cat].find(x=>x.id==id);
+  fieldsWrap.innerHTML='';
+  const title = document.createElement('div');
+  title.innerHTML = `<strong>${obj.title}</strong><div class="muted" style="margin-top:4px">${obj.template.replaceAll('[','<code>[').replaceAll(']',']</code>')}</div>`;
+  fieldsWrap.appendChild(title);
+
+  const grid=document.createElement('div');
+  grid.className='grid'; grid.style.marginTop='12px';
+  obj.placeholders.forEach((ph,i)=>{
+    const d=document.createElement('div');
+    d.innerHTML = `
+      <label>${ph}</label>
+      <input type="text" data-ph="${ph}" placeholder="${ph.replace('tone: ','')}" />
+    `;
+    grid.appendChild(d);
+  });
+  fieldsWrap.appendChild(grid);
+}
+
+categoryEl.addEventListener('change', e=>{
+  populatePrompts(e.target.value);
+});
+promptEl.addEventListener('change', e=>{
+  const cat = categoryEl.value;
+  renderFields(cat, e.target.value);
+});
+
+document.getElementById('reset').addEventListener('click', ()=>{
+  outputEl.value='';
+  [...fieldsWrap.querySelectorAll('input')].forEach(i=>i.value='');
+});
+
+document.getElementById('generate').addEventListener('click', ()=>{
+  const cat = categoryEl.value;
+  const id = promptEl.value;
+  const obj = LIB[cat].find(x=>x.id==id);
+  let txt = obj.template;
+
+  const inputs = [...fieldsWrap.querySelectorAll('input')];
+  inputs.forEach(inp=>{
+    const ph = inp.getAttribute('data-ph');
+    const val = inp.value.trim() || `[${ph}]`;
+    // Replace all occurrences of [placeholder] with the value
+    const re = new RegExp("\\["+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+"\\]", "g");
+    txt = txt.replace(re, val);
+  });
+
+  // Optional style block
+  const tone   = document.getElementById('tone').value.trim();
+  const palette= document.getElementById('palette').value.trim();
+  const core   = document.getElementById('core').value.trim();
+  const font   = document.getElementById('fontset').value.trim();
+
+  if(tone || palette || core || font){
+    txt += `\n\nApply brand style:`
+    if(tone)    txt += `\n- Voice/Tone: ${tone}`;
+    if(palette) txt += `\n- Color Tone/Palette: ${palette}`;
+    if(core)    txt += `\n- Core Value: ${core}`;
+    if(font)    txt += `\n- Font Set: ${font}`;
+  }
+
+  outputEl.value = txt;
+});
+
+document.getElementById('copy').addEventListener('click', async ()=>{
+  try{
+    await navigator.clipboard.writeText(outputEl.value);
+    const old = event.target.textContent;
+    event.target.textContent = '✅ Copied!';
+    setTimeout(()=>{event.target.textContent = old;}, 1200);
+  }catch(e){
+    alert('Copy failed. Select the text and press Ctrl/Cmd+C.');
+  }
+});
+
+init();
+</script>
+</body>
+</html>
